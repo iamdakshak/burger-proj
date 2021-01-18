@@ -17,6 +17,7 @@ class App extends Component {
             <Route path='/orders' component={Orders} />
             <Route path='/auth' component={Auth} />
             <Route path='/' exact component={BurgerBuilder} />
+            {/*<Route path='/burger-proj' exact component={BurgerBuilder} /> only for when hosted online(remove above Route while hosting online)*/}
           </Switch>
         </Layout>
       </div>
