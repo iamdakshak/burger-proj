@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
@@ -15,7 +15,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 axios.defaults.baseURL = 'https://burger-react-56352-default-rtdb.firebaseio.com/';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
@@ -30,9 +30,11 @@ const store = createStore(rootReducer, composeEnhancers(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Suspense fallback={<span>Loading...</span> }>
+        <Router>
         <App />
-      </Router>
+        </Router>
+      </Suspense>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
